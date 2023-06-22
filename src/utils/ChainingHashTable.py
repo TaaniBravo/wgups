@@ -12,16 +12,20 @@ class ChainingHashTable:
             self.table.append([])
 
     def get_bucket_list(self, key: Any) -> list:
-        # get the bucket list where this item will go.
+        """
+        Returns the bucket list where the given key should be stored.
+        :param key:
+        :return:
+        """
         bucket = hash(key) % len(self.table)
         return self.table[bucket]
 
-    def insert(self, item: Any, key: str) -> None:
+    def insert(self, item: Any, key: Any) -> None:
         """
         Inserts a new item into the hashtable.
         Inserting based off a key and not the actual item allows to
         more accurately get objects with the same key value into the same bucket.
-        Runs at TC of O(1).
+        Time Complexity: O(1)
         """
         # get the bucket list where this item will go.
         bucket_list = self.get_bucket_list(key)
@@ -30,7 +34,7 @@ class ChainingHashTable:
 
     # Searches for an item with matching key in the hash table.
     # Returns the item if found, or None if not found.
-    def search(self, item: Any, key: int) -> Any:
+    def search(self, item: Any, key: Any) -> Any:
         # get the bucket list where this key would be.
         bucket_list = self.get_bucket_list(key)
 

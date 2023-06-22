@@ -1,5 +1,4 @@
-from models.Package import Package
-from models.Truck import Truck
+from models import Package, Truck
 from utils.ChainingHashTable import ChainingHashTable
 
 

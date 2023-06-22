@@ -1,5 +1,4 @@
-from models.Location import Location
-from utils.ChainingHashTable import ChainingHashTable
+from models import Location
 
 
 class Graph:

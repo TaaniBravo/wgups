@@ -2,21 +2,19 @@
 Author: Taanileka Maama
 Student ID: 005887076
 """
+from ui import ui
 from datetime import datetime
-from models.Location import Location
-from models.Package import Package
-from models.Truck import Truck
-from utils.DriverPool import DriverPool
-from utils.get_csv import get_packages, get_downtown_map, get_locations
+from models import Package, Truck
+from utils import DriverPool, get_packages
 
 if __name__ == "__main__":
     # First let's get all the locations
     # Secondly, we get all the packages that grouped based of a hash of their location
     packages: list[Package] = get_packages('data/package.csv')
     # Next we get our trucks instantiated
-    truck_one = Truck()
-    truck_two = Truck()
-    truck_three = Truck()
+    truck_one = Truck(1)
+    truck_two = Truck(2)
+    truck_three = Truck(3)
     # Then we can instantiate our driver_pool which is where drivers wait to be assigned a truck
     driver_pool = DriverPool()
     # Our first pass through the HashTable will not load the trucks with all the packages.
@@ -46,7 +44,7 @@ if __name__ == "__main__":
     truck_two.deliver_packages(datetime(today.year, today.month, today.day, 8))
     truck_one_departure_time = datetime(today.year, today.month, today.day, 9, 5)
     truck_one.deliver_packages(truck_one_departure_time)
-    driver_pool.add_driver_to_pool(truck_one.unassign_driver())
+    driver_pool.add_driver_to_pool(truck_one.release_driver())
 
     truck_three.assign_driver(driver_pool.enqueue_driver())
     truck_three.deliver_packages(truck_one.current_time)
@@ -65,3 +63,5 @@ if __name__ == "__main__":
         print(p.__str__())
 
     print(f"Total packages delivered: {total_packages_delivered}")
+
+    ui()

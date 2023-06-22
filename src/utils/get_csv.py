@@ -1,8 +1,6 @@
 import csv
 
-from models.Package import Package
-from models.Location import Location
-from utils.ChainingHashTable import ChainingHashTable
+from models import Location, Package
 from utils.Graph import Graph
 from os import path
 

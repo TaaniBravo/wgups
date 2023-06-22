@@ -1,4 +1,3 @@
-import sys
 from math import floor
 from typing import Any
 
@@ -8,7 +7,7 @@ class Location:
         self.id = id
         self.name = name
         self.address = address
-        self.distance: float = sys.maxsize
+        self.distance: float = float('inf')
         self.pred_loc = None
 
     def __getitem__(self, item) -> Any:
