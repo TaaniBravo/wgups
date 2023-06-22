@@ -5,7 +5,7 @@ def dijkstra_shortest_path(g, start_vertex):
         unvisited_queue.append(current_vertex)
 
     # Start_vertex has a distance of 0 from itself
-    start_vertex.distance = 0
+    start_vertex.distance: float = 0.0
 
     # One vertex is removed with each iteration; repeat until the list is
     # empty.
@@ -28,3 +28,14 @@ def dijkstra_shortest_path(g, start_vertex):
             if alternative_path_distance < adj_vertex.distance:
                 adj_vertex.distance = alternative_path_distance
                 adj_vertex.pred_vertex = current_vertex
+
+
+def get_shortest_path(start_vertex, end_vertex):
+    # Start from end_vertex and build the path backwards.
+    path: list = []
+    current_vertex = end_vertex
+    while current_vertex is not start_vertex:
+        path.insert(0, current_vertex)
+
+    # Return the path the object should move.
+    return path

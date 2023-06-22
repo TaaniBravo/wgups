@@ -1,3 +1,4 @@
+import sys
 from math import floor
 from typing import Any
 
@@ -7,10 +8,14 @@ class Location:
         self.id = id
         self.name = name
         self.address = address
-        self.adjacency_list = []
+        self.distance: float = sys.maxsize
+        self.pred_loc = None
 
-    def __getitem__(self, item):
+    def __getitem__(self, item) -> Any:
         return self[item]
+
+    def __setitem__(self, key: Any, value: Any) -> None:
+        self[key] = value
 
     @staticmethod
     def find_by_address(locations: list, address: str) -> Any:
@@ -18,6 +23,7 @@ class Location:
             if address == loc.address:
                 return loc
         return None
+
     @staticmethod
     def find_by_id(packages: list, id: int):
         """Will do a binary search on the packages to find the package with the
