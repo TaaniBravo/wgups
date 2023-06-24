@@ -1,6 +1,7 @@
 import csv
 
-from models import Location, Package
+from models.Package import Package
+from models import Location
 from utils.Graph import Graph
 from os import path
 

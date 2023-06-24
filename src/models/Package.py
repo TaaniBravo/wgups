@@ -1,3 +1,4 @@
+from config.constants import AT_HUB, IN_TRANSIT, DELIVERED
 from calendar import timegm
 from datetime import datetime
 from math import floor
@@ -37,7 +38,7 @@ class Package(object):
             self.deadline = datetime(today.year, today.month, today.day, 23, 59, 59)
         self.weight = weight
         self.notes = notes
-        self.status = 'At the hub'
+        self.status = AT_HUB
         self.delivery_time = None
         self.truck_id: str or None = None
 
@@ -88,14 +89,17 @@ class Package(object):
 
         return None
 
-    def update(self, status: str, delivery_time=None):
+    def set_as_delivered(self, delivery_time: datetime):
         """
         Updates the status and delivery time of the package.
         Time Complexity: O(1)
         """
-        self.status = status
+        self.status = DELIVERED
         if isinstance(delivery_time, datetime):
             self.delivery_time = delivery_time
+
+    def set_in_transit(self):
+        self.status = IN_TRANSIT
 
     def __str__(self):
         """

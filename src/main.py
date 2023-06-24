@@ -27,23 +27,13 @@ if __name__ == "__main__":
     for num in [1, 7, 8, 10, 11, 21, 22, 23, 25, 26, 27, 31, 32, 34]:
         truck_three.load_truck(packages[num])
 
-    # Try 2
-    # for package in packages:
-    #     if isinstance(package.deadline, datetime) and package.notes is None or package.notes is not None and 'Must be delivered' in package.notes or package.address in truck_one.addresses_to_deliver_to:
-    #         truck_one.load_truck(package)
-    #     elif isinstance(package.deadline, datetime) or (package.notes is not None) or package.address in truck_two.addresses_to_deliver_to:
-    #         truck_two.load_truck(package)
-    #     if package.deadline == "EOD" or package.address in truck_three.addresses_to_deliver_to:
-    #         truck_three.load_truck(package)
-
     # Now the trucks have been loaded we need to get a driver assigned to the truck and
     truck_one.assign_driver(driver_pool.enqueue_driver())
     truck_two.assign_driver(driver_pool.enqueue_driver())
 
     today = datetime.today()
     truck_two.deliver_packages(datetime(today.year, today.month, today.day, 8))
-    truck_one_departure_time = datetime(today.year, today.month, today.day, 9, 5)
-    truck_one.deliver_packages(truck_one_departure_time)
+    truck_one.deliver_packages(datetime(today.year, today.month, today.day, 8))
     driver_pool.add_driver_to_pool(truck_one.release_driver())
 
     truck_three.assign_driver(driver_pool.enqueue_driver())
