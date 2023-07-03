@@ -6,41 +6,32 @@ import os
 from datetime import datetime
 
 from models.Driver import Driver
+from models.Location import Location
 from models.Package import Package
 from models.Truck import Truck
 from utils.DriverPool import DriverPool
+from utils.Graph import Graph
 from utils.data import get_locations_from_csv, get_distances_from_csv, get_packages_from_csv
+from utils.get_project_root import get_project_root
 from utils.time import get_today_datetime
 from views.ui import ui
 
-
-def get_project_root():
-    """Return the absolute path of the project's root directory."""
-    current_path = os.path.abspath(__file__)  # Get the absolute path of the current file
-    root_path = os.path.dirname(current_path)  # Get the directory containing the current file
-
-    # Traverse up the directory tree until we find a specific file or reach the root
-    while not os.path.isfile(os.path.join(root_path, 'README.md')) and root_path != '/':
-        root_path = os.path.dirname(root_path)
-
-    return root_path
-
-
-PACKAGE_CSV = os.path.join(get_project_root(), 'data/package.csv')
-LOCATION_CSV = os.path.join(get_project_root(), 'data/address.csv')
-DISTANCE_CSV = os.path.join(get_project_root(), 'data/distance.csv')
+ROOT_DIR = get_project_root()
+PACKAGE_CSV = os.path.join(ROOT_DIR, 'data/package.csv')
+LOCATION_CSV = os.path.join(ROOT_DIR, 'data/address.csv')
+DISTANCE_CSV = os.path.join(ROOT_DIR, 'data/distance.csv')
 
 if __name__ == "__main__":
     # First let's get all the locations
-    locations = get_locations_from_csv(LOCATION_CSV)
-    graph = get_distances_from_csv(DISTANCE_CSV, locations)
+    locations: list[Location] = get_locations_from_csv(LOCATION_CSV)
+    graph: Graph = get_distances_from_csv(DISTANCE_CSV, locations)
     # Secondly, we get all the package information
     packages: list[Package] = get_packages_from_csv(PACKAGE_CSV, locations)
     # Next we get our trucks instantiated
     truck_one = Truck(1, locations[0], graph)
     truck_two = Truck(2, locations[0], graph)
     truck_three = Truck(3, locations[0], graph)
-    trucks = [truck_one, truck_two, truck_three]
+    trucks: list[Truck] = [truck_one, truck_two, truck_three]
     # Then we can instantiate our driver_pool which is where drivers wait to be assigned a truck
     driver_pool = DriverPool([Driver(), Driver()])
 
@@ -67,4 +58,3 @@ if __name__ == "__main__":
 
     # Finally, we can run the UI.
     ui(trucks, packages)
-
