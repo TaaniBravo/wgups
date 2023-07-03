@@ -109,12 +109,12 @@ class Truck:
         # Before we return, make sure there's no delayed packages
         if len(self.delayed_packages):
             self.wait_for_delayed_packages()
-            self.run_route()
+            self.run_route(recursive=True)
         self.travel_to_location(self.hub)
 
     def wait_for_delayed_packages(self) -> None:
         """
-        Waits for delayed packages to be updated. I don't think code is ever excuted but
+        Waits for delayed packages to be updated. Current package routes don't need this but
         added as a failsafe.
         Time complexity: O(n)
         Space complexity: O(1)
@@ -136,13 +136,13 @@ class Truck:
         """
         if len(self.delivery_locations) == 1:
             return self.delivery_locations.pop()
-        nearest_location: Location = self.delivery_locations[0]
-        for location in self.delivery_locations:
+        nearest_i = 0
+        for i, location in enumerate(self.delivery_locations):
+            nearest_location: Location = self.delivery_locations[nearest_i]
             if location.distance < nearest_location.distance:
-                nearest_location = location
+                nearest_i = i
 
-        self.delivery_locations.remove(nearest_location)
-        return nearest_location
+        return self.delivery_locations.pop(nearest_i)
 
     def travel_to_location(self, location: Location) -> None:
         """

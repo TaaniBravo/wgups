@@ -21,9 +21,11 @@ The algorithm chosen for this Python script is the nearest neighbor (NN) algorit
 3. The next is the scalability of the algorithm remains stable even when WGUPS scales to larger scaled cities. This is
    because the algorithm handles locations in a dynamic fashion and no predetermined route is needed.
 
+What about space and time complexity of NN? The NN algorithm implementation that I use has a O(n^2) time complexity where n is the amount of locations a truck needs to deliver to.
+This is due to us iterating through the list of delivery_locations until they are all removed from the stack and then also needing to iterate through the list on each top level loop to determine which location is the closest to our current location.
+The space complexity is however O(1) due to us not needing additional space through each iteration
+
 Now that we have gone over the reason for choosing the nearest neighbor algorithm, I can explain how we implemented it.
-There’s dynamic logic surrounding the core NN algorithm but the core algorithm is a very simple O(N) time complexity
-function.
 
 ## B Overview of the program
 
@@ -36,20 +38,35 @@ Read data from CSV files for locations, packages, and distances.
    Distances are stored in a Graph with route distances (HashTable) and adjacency list (HashTable).
 
 Initialize our trucks and drivers.
+  truck_one = Truck()
+  truck_two = Truck()
+  truck_three = Truck()
 
 Load our trucks with packages.
 
-Truck 1 is loaded and leaves early at 8:00 AM to deliver many of the packages with an early deadline.
-Truck 2 is loaded and leaves at 9:05 AM to deliver the rest of the packages that might have a deadline but are delayed.
-Truck 3 is loaded and awaits to leave once a driver becomes available.
+Truck 1 leaves early at 8:00 AM to deliver many of the packages with an early deadline.
+Truck 2 leaves at 9:05 AM to deliver the rest of the packages that might have a deadline but are delayed.
+Truck 3 waits to leave once a driver becomes available.
 
-Nearest Neighbor Algorithm O(n) time complexity.
-while there are addresses that we need to deliver to
+Nearest Neighbor Algorithm O(n^2) time complexity, O(1) space complexity as we remove from the stack of delivery_locations.
+while there are delivery_locations for a given truck
     find the closest address in the truck's list to deliver, to our current location
+      nearest_location = first location in trucks's delivery_locations
+      for location in truck's delivery locations
+        if location's distance is less than nearest_location
+          nearest_location = current location
+
+    remove nearest_location from delivery_locations
+
     deliver the package(s) to the address
-    update our current location
-    update the accumulated miles and the time spent traveling
+
+    travel to the nearest_location
+      update truck current location
+      update truck's current time
+      update truck's accumulated miles
+      recalculate distances from the current location
     remove the location from address that we need to deliver to
+Once all delivery_locations have been visited return to the main hub.
 ```
 
 ### 2. Programming Environment
@@ -176,5 +193,5 @@ complexity.
 
 As far a the graph goes I could have used a matrix to store the distances between locations although this would become
 extremely inefficient as the number of locations increased. I could have also used a dictionary to store the distances
-which would greatly simplify the code and would be more efficient than the current implementation. This is 
+which would greatly simplify the code and would be more efficient than the current implementation. This is
 because we would be able to look up the distance between two locations in O(1) time complexity.
