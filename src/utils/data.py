@@ -7,6 +7,14 @@ from models.Package import Package
 
 
 def get_packages_from_csv(filename: str, locations: list[Location]) -> list[Package]:
+    """
+    Reads a CSV file and returns a list of packages
+    Time complexity: O(n)
+    Space complexity: O(n)
+    :param filename:
+    :param locations:
+    :return:
+    """
     packages = []
     with open(filename, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
@@ -35,6 +43,13 @@ def get_packages_from_csv(filename: str, locations: list[Location]) -> list[Pack
 
 
 def get_locations_from_csv(filename: str) -> list[Location]:
+    """
+    Reads a CSV file and returns a list of locations
+    Time complexity: O(n)
+    Space complexity: O(n)
+    :param filename:
+    :return:
+    """
     locations = []
     with open(filename, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')
@@ -47,6 +62,14 @@ def get_locations_from_csv(filename: str) -> list[Location]:
 
 
 def get_distances_from_csv(filename: str, locations: list[Location]) -> Graph:
+    """
+    Reads a CSV file and returns a graph of locations and their distances from each other
+    Time complexity: O(n^2)
+    Space complexity: O(n^2)
+    :param filename:
+    :param locations:
+    :return:
+    """
     graph = Graph()
     with open(filename, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=',')

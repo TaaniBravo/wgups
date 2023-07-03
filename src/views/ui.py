@@ -12,6 +12,13 @@ def print_welcome_message():
 
 
 def print_total_milage(trucks: list[Truck]):
+    """
+    Prints the total milage of all trucks
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param trucks:
+    :return:
+    """
     total_milage = 0
     for truck in trucks:
         total_milage += truck.accumulated_distance
@@ -19,6 +26,13 @@ def print_total_milage(trucks: list[Truck]):
 
 
 def view_all_packages(packages: list[Package]):
+    """
+    Prints all packages
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :return:
+    """
     answers = prompt([
         Text('time', 'Enter a time to view the status of all packages at that time (HH:MM:SS). Leave empty for EOD')
     ])
@@ -34,6 +48,14 @@ def view_all_packages(packages: list[Package]):
 
 
 def filter_by_id(packages: list[Package], time: datetime):
+    """
+    Filters packages by ID
+    Time complexity: O(log n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     answers = prompt([
         Text('id', 'Enter a package ID')
     ])
@@ -51,6 +73,14 @@ def filter_by_id(packages: list[Package], time: datetime):
 
 
 def filter_by_address(packages: list[Package], time: datetime):
+    """
+    Filters packages by address
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     choices = list(set([p.address for p in packages]))
     answers = prompt([
         List('address', message="Select an address", choices=choices)
@@ -63,6 +93,14 @@ def filter_by_address(packages: list[Package], time: datetime):
 
 
 def filter_by_deadline(packages: list[Package], time: datetime):
+    """
+    Filters packages by deadline
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     choices = list(set([p.deadline for p in packages]))
     answers = prompt([
         List('deadline', message="Select a deadline", choices=choices)
@@ -75,6 +113,14 @@ def filter_by_deadline(packages: list[Package], time: datetime):
 
 
 def filter_by_city(packages: list[Package], time: datetime):
+    """
+    Filters packages by city
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     choices = list(set([p.city for p in packages]))
     answers = prompt([
         List('city', message="Select a city", choices=choices)
@@ -87,6 +133,14 @@ def filter_by_city(packages: list[Package], time: datetime):
 
 
 def filter_by_zip_code(packages: list[Package], time: datetime):
+    """
+    Filters packages by zip code
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     choices = list(set([p.zip_code for p in packages]))
     answers = prompt([
         List('zip_code', message="Select a zip code", choices=choices)
@@ -99,6 +153,14 @@ def filter_by_zip_code(packages: list[Package], time: datetime):
 
 
 def filter_by_weight(packages: list[Package], time: datetime):
+    """
+    Filters packages by weight
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     answers = prompt([
         Text('min', 'Enter a min weight'),
         Text('max', 'Enter a max weight')
@@ -115,6 +177,14 @@ def filter_by_weight(packages: list[Package], time: datetime):
 
 
 def filter_by_status(packages: list[Package], time: datetime):
+    """
+    Filters packages by status
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :param time:
+    :return:
+    """
     choices = ['At Hub', 'En Route', 'Delivered']
     answers = prompt([
         List('status', message="Select a status", choices=choices)
@@ -126,6 +196,13 @@ def filter_by_status(packages: list[Package], time: datetime):
 
 
 def filter_packages_by_field(packages: list[Package]):
+    """
+    Filters packages by a field
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param packages:
+    :return:
+    """
     answers = prompt([
         List('action', message="Select a package field to filter by",
              choices=['ID', 'Address', 'Deadline', 'City', 'Zip Code', 'Weight', 'Status', 'Quit']),
@@ -156,6 +233,14 @@ def filter_packages_by_field(packages: list[Package]):
 
 
 def ui(trucks: list[Truck], packages: list[Package]):
+    """
+    User interface
+    Time complexity: O(n)
+    Space complexity: O(1)
+    :param trucks:
+    :param packages:
+    :return:
+    """
     print_welcome_message()
     print_total_milage(trucks)
     while True:

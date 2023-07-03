@@ -2,6 +2,11 @@ from utils.HashTable import HashTable
 
 
 class Graph:
+    """
+    A graph data structure. This implementation uses an adjacency list.
+    This graph is from the WGU example cited below:
+    Citation: C950 Zybooks Chapter 6.12 Example
+    """
     def __init__(self):
         self.adjacency_list: HashTable = HashTable()
         self.edge_weights: HashTable = HashTable()

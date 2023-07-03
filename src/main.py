@@ -40,10 +40,11 @@ if __name__ == "__main__":
     truck_one = Truck(1, locations[0], graph)
     truck_two = Truck(2, locations[0], graph)
     truck_three = Truck(3, locations[0], graph)
-    # truck_pool = TruckPool([truck_one, truck_two, truck_three])
+    trucks = [truck_one, truck_two, truck_three]
     # Then we can instantiate our driver_pool which is where drivers wait to be assigned a truck
     driver_pool = DriverPool([Driver(), Driver()])
 
+    # We can load the trucks with packages. Each of these are O(1) operations since we know the list length.
     for num in [0, 3, 6, 7, 12, 13, 14, 15, 28, 29, 30, 31, 33, 36, 38, 39]:
         truck_one.load_truck(packages[num])
     for num in [2, 5, 9, 10, 11, 16, 17, 19, 20, 21, 22, 23, 24, 25, 35, 37]:
@@ -51,18 +52,19 @@ if __name__ == "__main__":
     for num in [1, 4, 8, 18, 26, 27, 32, 34]:
         truck_three.load_truck(packages[num])
 
-    # Now the trucks have been loaded we need to get a driver assigned to the truck and
+    # Trucks have been loaded we need to get a driver assigned to the truck and
     truck_one.assign_driver(driver_pool.get_available_driver())
     truck_two.assign_driver(driver_pool.get_available_driver())
 
     today = datetime.today()
     truck_one.run_route(get_today_datetime(8))
+    # Truck 2 has to wait for the delayed packages to arrive at the hub.
     truck_two.run_route(get_today_datetime(9, 5))
     driver_pool.add_driver_to_pool(truck_one.release_driver())
 
     truck_three.assign_driver(driver_pool.get_available_driver())
     truck_three.run_route(truck_one.current_time)
-    trucks = [truck_one, truck_two, truck_three]
 
+    # Finally, we can run the UI.
     ui(trucks, packages)
 

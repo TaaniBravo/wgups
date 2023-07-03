@@ -49,6 +49,14 @@ class Package:
 
     @staticmethod
     def find_by_address(packages: list, address: str):
+        """
+        Linear search for a package by address
+        Time complexity: O(n)
+        Space complexity: O(1)
+        :param packages:
+        :param address:
+        :return:
+        """
         return_list = []
         for p in packages:
             if p.address == address:
@@ -56,6 +64,13 @@ class Package:
         return return_list
 
     def determine_status(self, current_time: datetime) -> str:
+        """
+        Determine the status of the package based on the current time.
+        Time complexity: O(1)
+        Space complexity: O(1)
+        :param current_time:
+        :return:
+        """
         if current_time < self.en_route_time:
             return 'At Hub'
         elif self.en_route_time <= current_time < self.delivery_time:
@@ -70,5 +85,10 @@ class Package:
             return status
 
     def print(self, current_time: datetime):
+        """
+        Pretty print the package information
+        :param current_time:
+        :return:
+        """
         print(
             f'{self.id} | {self.address} | {self.deadline} | {self.city} | {self.state} | {self.zip_code} | {self.weight} | {self.determine_status(current_time)}')
