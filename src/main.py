@@ -22,10 +22,11 @@ LOCATION_CSV = os.path.join(ROOT_DIR, 'data/address.csv')
 DISTANCE_CSV = os.path.join(ROOT_DIR, 'data/distance.csv')
 
 if __name__ == "__main__":
-    # First let's get all the locations
+    # First let's get all the locations. This is an O(n) operation.
     locations: list[Location] = get_locations_from_csv(LOCATION_CSV)
+    # Next we get all the distances between locations. This is an O(n^2) operation.
     graph: Graph = get_distances_from_csv(DISTANCE_CSV, locations)
-    # Secondly, we get all the package information
+    # Then, we get all the package information. This is a one time O(n) operation.
     packages: list[Package] = get_packages_from_csv(PACKAGE_CSV, locations)
     # Next we get our trucks instantiated
     truck_one = Truck(1, locations[0], graph)
@@ -35,7 +36,7 @@ if __name__ == "__main__":
     # Then we can instantiate our driver_pool which is where drivers wait to be assigned a truck
     driver_pool = DriverPool([Driver(), Driver()])
 
-    # We can load the trucks with packages. Each of these are O(1) operations since we know the list length.
+    # We can load the trucks with packages. Each of these are O(1) operations since we know the list length every time.
     for num in [0, 3, 6, 7, 12, 13, 14, 15, 28, 29, 30, 31, 33, 36, 38, 39]:
         truck_one.load_truck(packages[num])
     for num in [2, 5, 9, 10, 11, 16, 17, 19, 20, 21, 22, 23, 24, 25, 35, 37]:

@@ -27,7 +27,7 @@ class HashTable:
         return self.hash_table[hashed_key]
 
     # Insert values into hash map
-    def set_val(self, key, val):
+    def set(self, key, val):
         """
         Inserts a value into the hash table
         Time complexity: O(n)
@@ -49,7 +49,7 @@ class HashTable:
         bucket.append((key, val))
 
     # Return searched value with specific key
-    def get_val(self, key) -> Any:
+    def get(self, key) -> Any:
         """
         Returns a value from the hash table
         Time complexity: O(n)
