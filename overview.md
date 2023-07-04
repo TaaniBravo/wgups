@@ -65,7 +65,7 @@ Run Route:
   and then also needing to iterate through the list on each top level loop to determine which location is the
   closest to our current location.
 
-Nearest Neighbor Overall:
+Overall:
 
 * We can do high level calculation of the time and space complexity of the program by adding the time and space
   complexity of each function together. Let's start by first determining our variables.
