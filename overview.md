@@ -42,47 +42,49 @@ Now that we have gone over the reason for choosing the nearest neighbor algorith
 
 CSV Functions:
 
-* Locations: O(n) time complexity, O(n) space complexity, n being the rows in the csv.
-* Packages: O(n) time complexity, O(n) space complexity, n being the rows in the csv.
-* Distances: O(n^2) time complexity, O(n^2) space complexity, n being the locations parameter, and
+- Locations: O(n) time complexity, O(n) space complexity, n being the rows in the csv.
+- Packages: O(n) time complexity, O(n) space complexity, n being the rows in the csv.
+- Distances: O(n^2) time complexity, O(n^2) space complexity, n being the locations parameter, and
   we are also storing undirected edges in the edge_weights HashTable.
 
 Initialization Functions:
 
-* Trucks: O(1) time complexity, O(1) space complexity
+- Trucks: O(1) time complexity, O(1) space complexity
 
 Load Trucks:
 
-* O(n) time complexity, O(n) space complexity, n being the amount of packages that need to be loaded into the truck.
+- O(n) time complexity, O(n) space complexity, n being the amount of packages that need to be loaded into the truck.
   if this were a dynamic loading algorithm.
   Although this is O(1) time complexity due to us only loading 40 packages into the truck. and the
   packages are already in predetermined lists.
 
 Run Route:
 
-* O(n^2) time complexity, O(1) space complexity, n being the amount of locations a truck needs to deliver to.
+- O(n^2 + m) time complexity, O(1) space complexity, n being the amount of locations a truck needs to deliver to
+  and m is the packages that need to be delivered to that particular location the truck is located at.
   This is due to us iterating through the list of delivery_locations until they are all removed from the stack
   and then also needing to iterate through the list on each top level loop to determine which location is the
-  closest to our current location.
+  closest to our current location. Things like updating the current location, adding to the accumulated miles,
+  and updating the current_time are all O(1) time and space complexity.
 
 Overall:
 
-* We can do high level calculation of the time and space complexity of the program by adding the time and space
+- We can do high level calculation of the time and space complexity of the program by adding the time and space
   complexity of each function together. Let's start by first determining our variables.
-  * O(n) for the CSV list functions
-  * O(n^2) for the CSV graph function
-  * O(1) for the truck initialization
-  * O(n) for the truck loading
-  * O(n^2) for the truck running
-  * O(n) + O(n^2) + O(1) + O(n) + O(n^2) + O(n) = O(n^2) time complexity
-* Let's calculate the space complexity now:
-  * O(n) for the CSV list functions
-  * O(n^2) for the CSV graph function
-  * O(1) for the truck initialization
-  * O(n) for the truck loading
-  * O(n^2) for the truck running
-  * O(n) + O(n^2) + O(1) + O(n) + O(n^2) + O(n) = O(n^2) space complexity
-* As we can see the time and space complexity of the program is O(n^2) which is not ideal but is acceptable for the
+  - O(n) for the CSV list functions
+  - O(n^2) for the CSV graph function
+  - O(1) for the truck initialization
+  - O(n) for the truck loading
+  - O(n^2) for the truck running
+  - O(n) + O(n^2) + O(1) + O(n) + O(n^2 + m) + O(n) = O(n^2 + m) time complexity
+- Let's calculate the space complexity now:
+  - O(n) for the CSV list functions
+  - O(n^2) for the CSV graph function
+  - O(1) for the truck initialization
+  - O(n) for the truck loading
+  - O(n^2) for the truck running
+  - O(n) + O(n^2) + O(1) + O(n) + O(n^2) + O(n) = O(n^2) space complexity
+- As we can see the time and space complexity of the program is O(n^2) which is not ideal but is acceptable for the
   amount of data that we are working with and the requirements.
 
 ```
@@ -122,7 +124,7 @@ truck_three.run_route()
 truck.run_route()
    Nearest Neighbor Algorithm O(n^2) time complexity, O(1) space complexity as we remove from the stack of delivery_locations.
    while there are delivery_locations for a given truck
-       find the closest address in the truck's list to deliver to from our current location
+       find the closest address in the truck's delivery_locations list from our current location
          nearest_i = 0
          for location in truck's delivery locations
            nearest_location = truck's delivery_locations[nearest_i]
@@ -139,7 +141,7 @@ truck.run_route()
          update truck's accumulated miles
          recalculate distances from the current location
        remove the location from address that we need to deliver to
-       
+
 Once all delivery_locations have been visited return to the main hub.
 ```
 
